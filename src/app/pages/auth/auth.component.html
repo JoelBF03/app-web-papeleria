@@ -1,0 +1,37 @@
+<div class="body">
+  <div class="card">
+    <div class="imageContainer flexCenter">
+      <img
+        class="circleframe"
+        src="../../../assets/img/logo-auth.png"
+        alt="profile"
+      />
+      <h3>Login</h3>
+    </div>
+    <div class="content">
+      <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+        <input
+          class="textField"
+          type="text"
+          name="email"
+          id="email"
+          placeholder="Ingrese su correo empresarial"
+          #email="ngModel"
+          [(ngModel)]="user.email"
+          required
+        />
+        <input
+          class="textField mt-3"
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Ingrese su contraseña"
+          #password="ngModel"
+          [(ngModel)]="user.password"
+          required
+        />
+        <button class="primaryBtn mt-3">Ingresar</button>
+      </form>
+    </div>
+  </div>
+</div>

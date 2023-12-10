@@ -1,0 +1,48 @@
+<app-sidebar></app-sidebar>
+<section class="home-section">
+  <app-nav></app-nav>
+  <div class="home-content">
+    <div class="display-area">
+      <div class="card">
+        <div class="card-header">
+          <h5>Registro de Producto</h5>
+        </div>
+        <div class="card-body">
+          <div class="container">
+            <form #productoForm="ngForm" (ngSubmit)="onSubmit(productoForm)">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="input_name">Nombre del producto:</label>
+                  <input type="text" id="name" class="form-control" #name="ngModel" name="name" [(ngModel)]="producto.name" (blur)="validateName()" required />
+                  <div *ngIf="nameError" class="error-message">{{nameError}}</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="input_lastname"
+                    >Cantidad:</label
+                  >
+                  <input type="number" id="stock" class="form-control" #stock="ngModel" name="stock" [(ngModel)]="producto.stock" (blur)="validateStock()" required/>
+                  <div *ngIf="stockError" class="error-message">{{stockError}}</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="input_price"
+                    >Precio ($):</label
+                  >
+                  <input type="number" id="price" class="form-control" #price="ngModel" name="price" [(ngModel)]="producto.price" (blur)="validatePrice()" required/>
+                  <div *ngIf="priceError" class="error-message">{{priceError}}</div>
+                </div>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary me-2 btn-sm">
+                  Actualizar
+                </button>
+                <button type="button" routerLink="/products" class="btn btn-danger me-2 btn-sm">
+                  Regresar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

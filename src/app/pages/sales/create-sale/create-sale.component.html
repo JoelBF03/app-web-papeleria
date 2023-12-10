@@ -1,0 +1,361 @@
+<app-sidebar></app-sidebar>
+<section class="home-section">
+  <app-nav></app-nav>
+  <div class="home-content">
+    <div class="display-area">
+      <div class="main">
+        <main class="content">
+          <div class="container-fluid">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="header-title">Registrar Venta</h5>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 col-xl-12 form-group">
+                    <div class="card">
+                      <div
+                        class="card-header"
+                        style="color: #fff; background-color: #0a2558"
+                      >
+                        <h5 class="card-title">Datos de la Venta</h5>
+                      </div>
+                      <div class="card-body">
+                        <form
+                          #ventaForm="ngForm"
+                          (ngSubmit)="onSubmit(ventaForm)"
+                        >
+                          <div class="row">
+                            <div class="col-lg-4 form-group">
+                              <label><b>Empleado</b></label>
+                              <input
+                                type="text"
+                                class="form-control mt-2"
+                                readonly
+                                value="{{ identity.name }}"
+                                required
+                              />
+                            </div>
+                            <div class="col-lg-4 form-group">
+                              <label><b>Clientes</b></label>
+                              <select
+                                class="form-control form-select mt-2"
+                                #idcliente="ngModel"
+                                name="idcliente"
+                                [(ngModel)]="venta.idcliente"
+                                required
+                              >
+                                <!--   -->
+                                <option value="">SELECCIONAR</option>
+                                <option
+                                  value="{{ item._id }}"
+                                  *ngFor="let item of clientes"
+                                >
+                                  {{ item.name }}
+                                </option>
+                              </select>
+                            </div>
+                            <div class="col-lg-2 form-group mt-2">
+                              <a
+                                [routerLink]="['/clients/new-client']"
+                                class="btn btn-dark mt-4"
+                                style="color: white !important"
+                                >Nuevo cliente</a
+                              >
+                            </div>
+                            <div class="col-lg-2 form-group mt-2">
+                              <button type="submit" class="btn btn-dark mt-4">
+                                Registrar venta
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-xl-12 form-group mt-4">
+                    <div class="card">
+                      <div
+                        class="card-header"
+                        style="color: #fff; background-color: #0a2558"
+                      >
+                        <h5 class="card-title">Detalles de la venta</h5>
+                      </div>
+                      <div class="card-body">
+                        <form
+                          #detalleForm="ngForm"
+                          (ngSubmit)="save_detalle(detalleForm)"
+                        >
+                          <div class="row">
+                            <div class="col-lg-4 form-group">
+                              <label for=""><b>Productos</b></label>
+                              <select
+                                class="form-control form-select mt-2"
+                                #idproducto="ngModel"
+                                name="idproducto"
+                                [(ngModel)]="detalle.idproducto"
+                                (change)="onSelect($event)"
+                                required
+                              >
+                                <option value="" disabled>SELECCIONAR</option>
+                                <option
+                                  value="{{ item._id }}"
+                                  *ngFor="let item of productos"
+                                >
+                                  {{ item.name }}
+                                </option>
+                              </select>
+                            </div>
+                            <div class="col-lg-3 form-group">
+                              <label for=""><b>Stock actual</b></label>
+                              <input
+                                type="text"
+                                readonly
+                                class="form-control mt-2"
+                                value="{{ producto.stock }}"
+                              />
+                            </div>
+                            <div class="col-lg-3 form-group">
+                              <label for=""><b>Cantidad</b></label>
+                              <input
+                                type="text"
+                                class="form-control mt-2"
+                                #cantidad="ngModel"
+                                name="cantidad"
+                                [(ngModel)]="detalle.cantidad"
+                                required
+                              />
+                            </div>
+                            <div class="col-lg-1 form-group">
+                              <button
+                                class="btn btn-dark btn-block"
+                                style="margin-top: 30px !important"
+                                type="submit"
+                              >
+                                Agregar
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-xl-12 mt-4">
+                    <div class="card">
+                      <div
+                        class="card-header"
+                        style="color: #fff; background-color: #0a2558"
+                      >
+                        <h5 class="card-title">Productos</h5>
+                      </div>
+                      <table class="table table-striped table-hover table-sm">
+                        <thead>
+                          <th style="text-align: center !important">
+                            Eliminar
+                          </th>
+                          <th style="text-align: center !important">
+                            Producto
+                          </th>
+                          <th style="text-align: center !important">Precio</th>
+                          <th style="text-align: center !important">
+                            Cantidad
+                          </th>
+                          <th style="text-align: center !important">
+                            Tota Unitario
+                          </th>
+                        </thead>
+                        <tbody
+                          *ngFor="let item of data_detalle; let idx = index"
+                        >
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 5px 0px !important;
+                            "
+                          >
+                            <a
+                              class="btn btn-danger btn-sm"
+                              style="color: white; background-color: red"
+                              (click)="
+                                eliminar(idx, item.price, item.cantidad)
+                              "
+                              ><i class="fa-solid fa-trash-can"></i
+                            ></a>
+                          </td>
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 8px 0px !important;
+                            "
+                          >
+                            {{ item.producto }}
+                          </td>
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 8px 0px !important;
+                            "
+                          >
+                            ${{ item.price }}
+                          </td>
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 8px 0px !important;
+                            "
+                          >
+                            {{ item.cantidad }}
+                          </td>
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 8px 0px !important;
+                            "
+                          >
+                            ${{ item.price * item.cantidad }}
+                          </td>
+                        </tbody>
+                        <tfoot>
+                          <!--OPERACION PARA TOTAL-->
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 5px 0px !important;
+                            "
+                          >
+                            <b>Total</b>
+                          </td>
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 8px 0px !important;
+                            "
+                          >
+                            -
+                          </td>
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 8px 0px !important;
+                            "
+                          >
+                            -
+                          </td>
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 8px 0px !important;
+                            "
+                          >
+                            -
+                          </td>
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 5px 0px !important;
+                            "
+                          >
+                            ${{ total }}
+                          </td>
+                        </tfoot>
+                        <tfoot>
+                          <!--OPERACION PARA SUBTOTAL-->
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 5px 0px !important;
+                            "
+                          >
+                            <b>Subtotal</b>
+                          </td>
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 8px 0px !important;
+                            "
+                          >
+                            -
+                          </td>
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 8px 0px !important;
+                            "
+                          >
+                            -
+                          </td>
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 8px 0px !important;
+                            "
+                          >
+                            -
+                          </td>
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 5px 0px !important;
+                            "
+                          >
+                            ${{ subtotal }}
+                          </td>
+                        </tfoot>
+                        <tfoot>
+                          <!--OPERACION PARA IVA-->
+                          <!-- <td
+                            style="
+                              text-align: center !important;
+                              padding: 5px 0px !important;
+                            "
+                          >
+                            <b>IVA 12%</b>
+                          </td>
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 8px 0px !important;
+                            "
+                          >
+                            -
+                          </td>
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 8px 0px !important;
+                            "
+                          >
+                            -
+                          </td>
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 8px 0px !important;
+                            "
+                          >
+                            -
+                          </td>
+                          <td
+                            style="
+                              text-align: center !important;
+                              padding: 5px 0px !important;
+                            "
+                          >
+                            ${{ iva }}
+                          </td> -->
+                        </tfoot>
+                      </table>
+                      <div class="card-footer"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</section>

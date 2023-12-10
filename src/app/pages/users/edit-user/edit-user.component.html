@@ -1,0 +1,140 @@
+<app-sidebar></app-sidebar>
+<section class="home-section">
+  <app-nav></app-nav>
+  <div class="home-content">
+    <div class="display-area">
+      <div class="card">
+        <div class="card-header">
+          <h5>Edición de Usuarios</h5>
+        </div>
+        <div class="card-body">
+          <div class="container">
+            <form #clientForm="ngForm" (ngSubmit)="onSubmit(clientForm)">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="input_name"
+                    >Nombre y Apellido del Usuario:</label
+                  >
+                  <input
+                    type="text"
+                    id="name"
+                    class="form-control"
+                    #name="ngModel"
+                    name="name"
+                    [(ngModel)]="user.name"
+                    (blur)="validateName()"
+                    required
+                  />
+                  <div *ngIf="nameError" class="error-message">
+                    {{ nameError }}
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="input_name"
+                    >Nombre de usuario:</label
+                  >
+                  <input
+                    type="text"
+                    id="username"
+                    class="form-control"
+                    #username="ngModel"
+                    name="username"
+                    [(ngModel)]="user.username"
+                    (blur)="validateUsername()"
+                    required
+                  />
+                  <div *ngIf="usernameError" class="error-message">
+                    {{ usernameError }}
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="input_email">Email:</label>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text">@</span>
+                    <input
+                      type="email"
+                      id="input_email"
+                      class="form-control"
+                      id="email"
+                      class="form-control"
+                      #email="ngModel"
+                      name="email"
+                      [(ngModel)]="user.email"
+                      (blur)="validateEmail()"
+                      required
+                    />
+                  </div>
+                  <div *ngIf="emailError" class="error-message">
+                    {{ emailError }}
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="input_phone">Teléfono:</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    class="form-control"
+                    #phone="ngModel"
+                    name="phone"
+                    [(ngModel)]="user.phone"
+                    (blur)="validatePhone()"
+                    required
+                  />
+                  <div *ngIf="phoneError" class="error-message">
+                    {{ phoneError }}
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="input_name">Dirección:</label>
+                  <input
+                    type="text"
+                    id="address"
+                    class="form-control"
+                    #address="ngModel"
+                    name="address"
+                    [(ngModel)]="user.address"
+                    (blur)="validateAddress()"
+                    required
+                  />
+                  <div *ngIf="addressError" class="error-message">
+                    {{ addressError }}
+                  </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <label class="form-label" for="input_role">Rol:</label>
+                  <select
+                    id="role"
+                    class="form-control"
+                    #role="ngModel"
+                    name="role"
+                    [(ngModel)]="user.role"
+                    required
+                  >
+                    <option value="" disabled>Selecciona un rol</option>
+                    <option value="admin">Administrador</option>
+                    <option value="vendedor">Vendedor</option>
+                  </select>
+                  <div *ngIf="roleError" class="error-message">
+                    {{ roleError }}
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary me-2 btn-sm">
+                  Actualizar
+                </button>
+                <button
+                  type="button"
+                  routerLink="/users"
+                  class="btn btn-danger me-2 btn-sm"
+                >
+                  Regresar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

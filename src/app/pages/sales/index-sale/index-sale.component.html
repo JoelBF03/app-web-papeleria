@@ -1,0 +1,103 @@
+<app-sidebar></app-sidebar>
+<section class="home-section">
+  <app-nav></app-nav>
+  <div class="display-area">
+    <div class="content mt-5">
+      <div class="container-fluid">
+        <div class="header">
+          <p class="header-subtitle">
+            Listado de ventas registradas en la empresa.
+          </p>
+        </div>
+        <div class="row">
+          <div class="col-12 col-xl-12">
+            <div class="card">
+              <div
+                class="card-header"
+                style="color: #fff; background-color: #0a2558"
+              >
+                <div class="row">
+                  <div class="col-lg-6">
+                    <h5 class="card-title">Opciones de ventas</h5>
+                    <a
+                      routerLink="/sales/new-sale"
+                      class="btn btn-dark btn__mod"
+                      >Nueva Venta</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-3 ms-2 mb-3">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="fechaInicio">Fecha de Inicio:</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="fechaInicio"
+                      [(ngModel)]="filtroFechaInicio"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="fechaFin">Fecha de Fin:</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="fechaFin"
+                      [(ngModel)]="filtroFechaFin"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4 mt-4">
+                  <button class="btn btn-primary me-2" (click)="aplicarFiltro()">
+                    Aplicar Filtro
+                  </button>
+                  <button class="btn btn-secondary" (click)="resetearFiltro()">Resetear Filtro</button>
+                </div>
+              </div>
+              <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                  <tr>
+                    <th class="ps-5">Cliente</th>
+                    <th class="ps-5">Vendedor</th>
+                    <th class="ps-5">Total Venta</th>
+                    <th class="ps-5">Fecha</th>
+                    <th>Opciones</th>
+                  </tr>
+                </thead>
+                <tbody
+                  *ngFor="
+                    let item of sales
+                      | paginate : { itemsPerPage: 5, currentPage: p }
+                  "
+                >
+                  <td class="ps-5">{{ item.idcliente.name }}</td>
+                  <td class="ps-5">{{ item.iduser.name }}</td>
+                  <td class="ps-5">${{ item.montoTotal }}</td>
+                  <td class="ps-5">
+                    {{ item.fecha | date : "MMM d, y, h:mm:ss a" }}
+                  </td>
+                  <td>
+                    <i
+                      class="fas fa-info-circle"
+                      style="color: #0a2558; cursor: pointer; margin-left: 31px"
+                      [routerLink]="['/sales/view-details', item._id]"
+                    ></i>
+                  </td>
+                </tbody>
+              </table>
+            </div>
+            <div class="pagination mt-3">
+              <pagination-controls
+                class="pagination"
+                (pageChange)="p = $event"
+              ></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
